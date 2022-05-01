@@ -1,0 +1,6 @@
+streamlit
+streamlit-webcam-example
+opencv-python
+numpy
+tensorflow
+tensorflow-hub
