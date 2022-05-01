@@ -1,7 +1,7 @@
 from ctypes import resize
 import streamlit as st
 import numpy as np
-import cv2
+from cv2 import cv2
 import tensorflow as tf
 import tensorflow_hub as hub
 
