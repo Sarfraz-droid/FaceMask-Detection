@@ -1,6 +1,7 @@
 streamlit
 streamlit-webcam-example
-opencv-python
+opencv_python==4.5.1.48
 numpy
 tensorflow
 tensorflow-hub
+Pillow==8.2.0
