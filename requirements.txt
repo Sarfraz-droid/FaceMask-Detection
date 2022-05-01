@@ -6,3 +6,4 @@ tensorflow
 tensorflow-hub
 Pillow==8.2.0
 opencv-contrib-python
+mtcnn

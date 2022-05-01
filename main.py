@@ -4,6 +4,7 @@ import numpy as np
 from cv2 import cv2
 import tensorflow as tf
 import tensorflow_hub as hub
+from mtcnn import MTCNN
 
     
     
@@ -21,7 +22,7 @@ st.title("Face-Mask Detector App")
 face_cascade = cv2.CascadeClassifier('./model/haarcascade_frontalface.xml')
 
 img_file_buffer = st.camera_input("Take a picture")
-
+detector = MTCNN()
 
 
 if img_file_buffer is not None:
@@ -35,10 +36,11 @@ if img_file_buffer is not None:
     gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     X = []
+    detected_faces = detector.detect_faces(cv2_col)
+    print("Detected Faces")
+    print(detected_faces)
     
-    print(faces)
-    
-    if(len(faces)==0):
+    if(len(detected_faces)==0):
         st.write("No Face Detected")
     else:
         mask_detector_values = [
@@ -47,7 +49,10 @@ if img_file_buffer is not None:
             "maskweared_incorrect"
         ]
     
-        for (x,y,w,h) in faces:
+        for face in detected_faces:
+            (x,y,w,h) = face['box']
+            if face['confidence'] < 0.7: 
+                continue
             cv2_img = cv2.rectangle(cv2_col,(x,y),(x+w,y+h),(255,0,0),2)
             roi_color = cv2_img[y:y+h, x:x+w]
             resized = cv2.resize(roi_color, (224,224))            
